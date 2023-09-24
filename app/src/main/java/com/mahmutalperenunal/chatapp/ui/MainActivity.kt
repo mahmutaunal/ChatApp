@@ -1,4 +1,4 @@
-package com.mahmutalperenunal.chatapp
+package com.mahmutalperenunal.chatapp.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
 import androidx.core.view.MenuItemCompat
+import com.mahmutalperenunal.chatapp.R
 import com.mahmutalperenunal.chatapp.databinding.ActivityMainBinding
-import com.mahmutalperenunal.chatapp.ui.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,11 +23,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.app_bar_settings -> {
+            R.id.app_bar_profile -> {
                 val intent = Intent(
                     applicationContext,
-                    SettingsActivity::class.java
-                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    ProfileActivity::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
                 true
             }

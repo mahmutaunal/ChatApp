@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.mahmutalperenunal.chatapp.MainActivity
 import com.mahmutalperenunal.chatapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -50,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(
                         applicationContext,
                         MainActivity::class.java
-                    ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                     startActivity(intent)
                     finish()
 

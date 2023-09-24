@@ -7,7 +7,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.mahmutalperenunal.chatapp.MainActivity
 import com.mahmutalperenunal.chatapp.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -75,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
                             val intent = Intent(
                                 applicationContext,
                                 MainActivity::class.java
-                            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                             startActivity(intent)
                             finish()
                         } else {
