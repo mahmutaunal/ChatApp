@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import com.mahmutalperenunal.chatapp.databinding.ActivityMainBinding
+import com.mahmutalperenunal.chatapp.ui.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,8 +24,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.app_bar_settings -> {
-
-                item.isVisible = false
+                val intent = Intent(
+                    applicationContext,
+                    SettingsActivity::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
                 true
             }
 
@@ -33,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
 
         val searchViewItem = menu.findItem(R.id.app_bar_search)
         val searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView

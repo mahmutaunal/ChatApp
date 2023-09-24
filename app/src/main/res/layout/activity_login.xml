@@ -19,19 +19,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_username_textInputLayout"
+            android:id="@+id/login_email_textInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
+            android:hint="Email"
             app:counterEnabled="true"
             app:counterMaxLength="100">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_username_textInputEditText"
+                android:id="@+id/login_email_textInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
