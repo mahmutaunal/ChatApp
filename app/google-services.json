@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "177269675395",
+    "firebase_url": "https://chatapp-623f2-default-rtdb.firebaseio.com",
+    "project_id": "chatapp-623f2",
+    "storage_bucket": "chatapp-623f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177269675395:android:807d021889848654d792b6",
+        "android_client_info": {
+          "package_name": "com.mahmutalperenunal.chatapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2DoYDXpy1U1ohGJj8P8NCOAD88KWJY7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
