@@ -1,6 +1,7 @@
 package com.mahmutalperenunal.chatapp.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mahmutalperenunal.chatapp.R
 import com.mahmutalperenunal.chatapp.model.User
+import com.mahmutalperenunal.chatapp.ui.ChattingActivity
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AllUsersAdapter(
-    val mContext: Context,
-    val mUsers: List<User>,
+    private val mContext: Context,
+    private val mUsers: List<User>,
     val isChatCheck: Boolean
 ) : RecyclerView.Adapter<AllUsersAdapter.ViewHolder?>() {
 
@@ -46,6 +48,21 @@ class AllUsersAdapter(
         holder.username.text = user.username
         Glide.with(mContext).load(user.profile).centerCrop()
             .placeholder(R.drawable.profile_image).into(holder.profileImage)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(
+                mContext,
+                ChattingActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("visit_id", user.uid)
+            mContext.startActivity(intent)
+        }
+
+        holder.profileImage.setOnClickListener {
+            /*val intent = Intent(mContext, ChattingActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("visit_id", user.uid)
+            mContext.startActivity(intent)*/
+        }
     }
 
 }
