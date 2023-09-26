@@ -7,9 +7,12 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.view.MenuItemCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -73,6 +76,11 @@ class ProfileActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.settings_toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun setUserProfilePicture() {

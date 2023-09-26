@@ -19,6 +19,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainToolbar)
+
+        binding.mainAllUsersButton.setOnClickListener { allUsersActivity() }
+    }
+
+    private fun allUsersActivity() {
+        val intent = Intent(applicationContext, AllUsersActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
