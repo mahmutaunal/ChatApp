@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mahmutalperenunal.chatapp.R
 import com.mahmutalperenunal.chatapp.adapter.AllUsersAdapter
+import com.mahmutalperenunal.chatapp.adapter.LastChatsAdapter
 import com.mahmutalperenunal.chatapp.databinding.ActivityMainBinding
 import com.mahmutalperenunal.chatapp.model.Chat
 import com.mahmutalperenunal.chatapp.model.ChatList
@@ -26,7 +27,7 @@ import com.mahmutalperenunal.chatapp.notification.Token
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var usersAdapter: AllUsersAdapter? = null
+    private var usersAdapter: LastChatsAdapter? = null
     private var usersList: List<User>? = null
     private var chatList: List<ChatList>? = null
     private var firebaseUser: FirebaseUser? = null
@@ -123,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 usersAdapter =
-                    AllUsersAdapter(applicationContext, (usersList as ArrayList<User>), true)
+                    LastChatsAdapter(applicationContext, (usersList as ArrayList<User>), true)
                 binding.mainRecyclerView.adapter = usersAdapter
             }
 
@@ -137,6 +138,23 @@ class MainActivity : AppCompatActivity() {
     private fun allUsersActivity() {
         val intent = Intent(applicationContext, AllUsersActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun updateStatus(status: String) {
+        val ref = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+        val hashMap = HashMap<String, Any>()
+        hashMap["status"] = status
+        ref.updateChildren(hashMap)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateStatus("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateStatus("offline")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -15,8 +15,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class AllUsersAdapter(
     private val mContext: Context,
-    private val mUsers: List<User>,
-    val isChatCheck: Boolean
+    private val mUsers: List<User>
 ) : RecyclerView.Adapter<AllUsersAdapter.ViewHolder?>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

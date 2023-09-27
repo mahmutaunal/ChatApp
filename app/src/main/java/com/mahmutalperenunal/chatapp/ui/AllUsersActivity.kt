@@ -51,7 +51,7 @@ class AllUsersActivity : AppCompatActivity() {
 
                     }
 
-                    allUsersAdapter = AllUsersAdapter(applicationContext, usersList!!, false)
+                    allUsersAdapter = AllUsersAdapter(applicationContext, usersList!!)
                     binding.allUsersRecyclerView.adapter = allUsersAdapter
                 }
             }
