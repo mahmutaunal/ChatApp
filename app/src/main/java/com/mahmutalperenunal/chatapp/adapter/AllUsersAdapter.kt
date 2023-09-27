@@ -19,7 +19,7 @@ class AllUsersAdapter(
     val isChatCheck: Boolean
 ) : RecyclerView.Adapter<AllUsersAdapter.ViewHolder?>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var username: TextView
         var profileImage: CircleImageView
         var onlineImage: CircleImageView

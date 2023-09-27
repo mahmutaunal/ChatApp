@@ -23,6 +23,7 @@ class AllUsersActivity : AppCompatActivity() {
         binding = ActivityAllUsersBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.allUsersToolbar)
+        supportActionBar!!.title = "All Users"
 
         //initialize
         usersList = ArrayList()

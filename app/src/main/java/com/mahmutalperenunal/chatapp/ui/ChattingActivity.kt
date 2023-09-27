@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
@@ -32,6 +33,8 @@ class ChattingActivity : AppCompatActivity() {
     private var visitId: String? = null
     private var chatsAdapter: ChatsAdapter? = null
     private var chatsList: List<Chat>? = null
+    private var seenListener: ValueEventListener? = null
+    private var reference: DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +51,8 @@ class ChattingActivity : AppCompatActivity() {
         binding.recyclerViewChats.layoutManager = LinearLayoutManager(applicationContext)
 
         getUsernameAndProfilePhotoAndMessages()
+
+        seenMessage(visitId!!)
 
         binding.chattingSendButton.setOnClickListener {
             controlMessage()
@@ -165,9 +170,9 @@ class ChattingActivity : AppCompatActivity() {
     }
 
     private fun getUsernameAndProfilePhotoAndMessages() {
-        val reference = FirebaseDatabase.getInstance().reference.child("Users").child(visitId!!)
+        reference = FirebaseDatabase.getInstance().reference.child("Users").child(visitId!!)
 
-        reference.addValueEventListener(object : ValueEventListener {
+        reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user: User? = snapshot.getValue(User::class.java)
 
@@ -212,5 +217,34 @@ class ChattingActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun seenMessage(userId: String) {
+        val reference = FirebaseDatabase.getInstance().reference.child("Chats")
+
+        seenListener = reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (data in snapshot.children) {
+                    val chat = data.getValue(Chat::class.java)
+
+                    if (chat!!.receiver.equals(firebaseUser!!.uid) && chat.sender.equals(userId)) {
+                        val hashMap = HashMap<String, Any>()
+                        hashMap["isSeen"] = true
+                        data.ref.updateChildren(hashMap)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        reference!!.removeEventListener(seenListener!!)
     }
 }
