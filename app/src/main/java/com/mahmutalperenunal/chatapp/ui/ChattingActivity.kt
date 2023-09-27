@@ -25,6 +25,15 @@ import com.mahmutalperenunal.chatapp.adapter.ChatsAdapter
 import com.mahmutalperenunal.chatapp.databinding.ActivityChattingBinding
 import com.mahmutalperenunal.chatapp.model.Chat
 import com.mahmutalperenunal.chatapp.model.User
+import com.mahmutalperenunal.chatapp.notification.Client
+import com.mahmutalperenunal.chatapp.notification.Data
+import com.mahmutalperenunal.chatapp.notification.MyResponse
+import com.mahmutalperenunal.chatapp.notification.Sender
+import com.mahmutalperenunal.chatapp.notification.Token
+import com.mahmutalperenunal.chatapp.util.APIService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ChattingActivity : AppCompatActivity() {
 
@@ -35,6 +44,8 @@ class ChattingActivity : AppCompatActivity() {
     private var chatsList: List<Chat>? = null
     private var seenListener: ValueEventListener? = null
     private var reference: DatabaseReference? = null
+    private var notify = false
+    private var apiService: APIService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +55,9 @@ class ChattingActivity : AppCompatActivity() {
         visitId = intent.getStringExtra("visit_id")
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        apiService =
+            Client.Client.getClient("https://fcm.googleapis.com/")!!.create(APIService::class.java)
 
         binding.recyclerViewChats.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(applicationContext)
@@ -55,11 +69,15 @@ class ChattingActivity : AppCompatActivity() {
         seenMessage(visitId!!)
 
         binding.chattingSendButton.setOnClickListener {
+            notify = true
             controlMessage()
             binding.chattingMessageTextInputEditText.setText("")
         }
 
-        binding.chattingAttachButton.setOnClickListener { openActivity() }
+        binding.chattingAttachButton.setOnClickListener {
+            notify = true
+            openActivity()
+        }
     }
 
     private fun openActivity() {
@@ -109,9 +127,39 @@ class ChattingActivity : AppCompatActivity() {
                     messageHashMap["messageId"] = messageId
 
                     ref.child("Chats").child(messageId!!).setValue(messageHashMap)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+
+                                loadingBar.dismiss()
+
+                                val reference =
+                                    FirebaseDatabase.getInstance().reference.child("Users")
+                                        .child(firebaseUser!!.uid)
+                                reference.addValueEventListener(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        val user = snapshot.getValue(User::class.java)
+
+                                        if (notify) {
+                                            sendNotification(
+                                                visitId,
+                                                user!!.username,
+                                                "Sent you an image."
+                                            )
+                                        }
+
+                                        notify = false
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+
+                            }
+                        }
                 }
             }
-            loadingBar.dismiss()
         }
     }
 
@@ -162,11 +210,77 @@ class ChattingActivity : AppCompatActivity() {
                         }
 
                     })
-
-                    val reference = FirebaseDatabase.getInstance().reference.child("Users")
-                        .child(firebaseUser!!.uid)
                 }
             }
+
+        val usersReference = FirebaseDatabase.getInstance().reference.child("Users")
+            .child(firebaseUser!!.uid)
+        usersReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+
+                if (notify) {
+                    sendNotification(receiverId, user!!.username, message)
+                }
+
+                notify = false
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    private fun sendNotification(receiverId: String?, username: String?, message: String) {
+        val ref = FirebaseDatabase.getInstance().reference.child("Tokens")
+        val query = ref.orderByKey().equalTo(receiverId)
+
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (data in snapshot.children) {
+                    val token: Token? = data.getValue(Token::class.java)
+
+                    val data = Data(
+                        firebaseUser!!.uid,
+                        R.mipmap.ic_launcher,
+                        "$username: $message",
+                        "Chat App",
+                        visitId
+                    )
+
+                    val sender = Sender(data, token!!.token)
+
+                    apiService!!.sendNotification(sender)!!.enqueue(object : Callback<MyResponse?> {
+                        override fun onResponse(
+                            call: Call<MyResponse?>,
+                            response: Response<MyResponse?>
+                        ) {
+                            if (response.code() == 200) {
+                                if (response.body()!!.success !== 1) {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Failed!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<MyResponse?>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     private fun getUsernameAndProfilePhotoAndMessages() {

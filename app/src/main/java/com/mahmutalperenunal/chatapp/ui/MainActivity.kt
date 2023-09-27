@@ -14,12 +14,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.mahmutalperenunal.chatapp.R
 import com.mahmutalperenunal.chatapp.adapter.AllUsersAdapter
 import com.mahmutalperenunal.chatapp.databinding.ActivityMainBinding
 import com.mahmutalperenunal.chatapp.model.Chat
 import com.mahmutalperenunal.chatapp.model.ChatList
 import com.mahmutalperenunal.chatapp.model.User
+import com.mahmutalperenunal.chatapp.notification.Token
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,7 +44,15 @@ class MainActivity : AppCompatActivity() {
 
         setAUnreadMessagesNumberAndGetChatLists()
 
+        updateToken(FirebaseMessaging.getInstance().token.toString())
+
         binding.mainAllUsersButton.setOnClickListener { allUsersActivity() }
+    }
+
+    private fun updateToken(token: String) {
+        val ref = FirebaseDatabase.getInstance().reference.child("Tokens")
+        val tokenNew = Token(token)
+        ref.child(firebaseUser!!.uid).setValue(tokenNew)
     }
 
     private fun setAUnreadMessagesNumberAndGetChatLists() {
