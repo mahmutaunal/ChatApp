@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.WelcomeActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="Logo"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/welcome_linearLayout"
         android:layout_width="match_parent"
@@ -41,8 +52,8 @@
             android:layout_marginLeft="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="32dp"
-            app:backgroundTint="@color/colorAccent"
-            android:text="Register" />
+            android:text="Register"
+            app:backgroundTint="@color/colorAccent" />
 
     </LinearLayout>
 

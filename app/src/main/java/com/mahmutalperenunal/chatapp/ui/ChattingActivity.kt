@@ -248,7 +248,7 @@ class ChattingActivity : AppCompatActivity() {
 
                     val data = Data(
                         firebaseUser!!.uid,
-                        R.mipmap.ic_launcher,
+                        R.drawable.ic_logo,
                         "$username: $message",
                         "Chat App",
                         visitId
