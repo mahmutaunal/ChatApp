@@ -26,6 +26,27 @@ This project is a simple messaging Android application that allows users to regi
 - Sending notifications.
 
 
+## Screenshots
+[<img src="/readme/Screenshot_20230928_151042.png" align="center"
+width="200"
+    hspace="10" vspace="10">](/readme/Screenshot_20230928_151042.png)
+[<img src="/readme/Screenshot_20230928_151056.png" align="left"
+width="200"
+    hspace="10" vspace="10">](/readme/Screenshot_20230928_151056.png)
+[<img src="/readme/Screenshot_20230928_151109.png" align="center"
+width="200"
+    hspace="10" vspace="10">](/readme/Screenshot_20230928_151109.png)
+[<img src="/readme/Screenshot_20230928_151152.png" align="left"
+width="200"
+    hspace="10" vspace="10">](/readme/Screenshot_20230928_151152.png)
+[<img src="/readme/Screenshot_20230928_151432.png" align="center"
+width="200"
+    hspace="10" vspace="10">](/readme/Screenshot_20230928_151432.png)
+[<img src="/readme/Screenshot_20230928_151425.png" align="left"
+width="200"
+    hspace="10" vspace="10">](/readme/Screenshot_20230928_151425.png)
+
+
 ## Setup
 
 ### Firebase
