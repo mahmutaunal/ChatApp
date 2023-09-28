@@ -1,11 +1,14 @@
 package com.mahmutalperenunal.chatapp.ui
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -173,28 +176,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
-
-        val searchViewItem = menu.findItem(R.id.app_bar_search)
-        val searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                /*if (mylist.contains(query)) {
-                    adapter.filter.filter(query)
-                } else {
-                    // Search query not found in List View
-                    Toast.makeText(this@MainActivity, "Not found", Toast.LENGTH_LONG).show()
-                }*/
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                //adapter.filter.filter(newText)
-                return false
-            }
-        })
-
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

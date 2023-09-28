@@ -23,11 +23,12 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class LastChatsAdapter(
     private val mContext: Context,
-    private val mUsers: List<User>,
+    private var mUsers: List<User>,
     private val isChatCheck: Boolean
 ) : RecyclerView.Adapter<LastChatsAdapter.ViewHolder?>() {
 
     private var lastMsg: String = ""
+    private var mUserFiltered = emptyList<User>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var username: TextView

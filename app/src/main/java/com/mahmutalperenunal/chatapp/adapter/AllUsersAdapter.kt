@@ -11,11 +11,12 @@ import com.bumptech.glide.Glide
 import com.mahmutalperenunal.chatapp.R
 import com.mahmutalperenunal.chatapp.model.User
 import com.mahmutalperenunal.chatapp.ui.ChattingActivity
+import com.mahmutalperenunal.chatapp.ui.VisitUserProfileActivity
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AllUsersAdapter(
     private val mContext: Context,
-    private val mUsers: List<User>
+    private var mUsers: List<User>
 ) : RecyclerView.Adapter<AllUsersAdapter.ViewHolder?>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -58,10 +59,15 @@ class AllUsersAdapter(
         }
 
         holder.profileImage.setOnClickListener {
-            /*val intent = Intent(mContext, ChattingActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            val intent = Intent(mContext, VisitUserProfileActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("visit_id", user.uid)
-            mContext.startActivity(intent)*/
+            mContext.startActivity(intent)
         }
+    }
+
+    fun filterList(filterList: ArrayList<User>) {
+        mUsers = filterList
+        notifyDataSetChanged()
     }
 
 }

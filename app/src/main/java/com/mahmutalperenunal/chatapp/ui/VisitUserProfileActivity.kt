@@ -22,6 +22,8 @@ class VisitUserProfileActivity : AppCompatActivity() {
         binding = ActivityVisitUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.visitUserProfileToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         //set action bar title
         supportActionBar!!.title = "Profile"

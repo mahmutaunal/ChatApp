@@ -130,13 +130,9 @@ class ChatsAdapter(
 
             if (firebaseUser.uid == chat.sender) {
                 holder.message!!.setOnClickListener {
-                    val options = arrayOf<CharSequence>(
-                        "Delete Message",
-                        "Cancel"
-                    )
-
-                    AlertDialog.Builder(holder.itemView.context, R.style.CustomAlertDialog)
+                    AlertDialog.Builder(mContext, R.style.CustomAlertDialog)
                         .setTitle("What do you want?")
+                        .setMessage("")
                         .setPositiveButton("Delete Message") { dialog, _ ->
                             deleteMessage(position, holder)
                             dialog.dismiss()

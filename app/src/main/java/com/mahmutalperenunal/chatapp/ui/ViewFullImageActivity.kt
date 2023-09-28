@@ -14,6 +14,8 @@ class ViewFullImageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityViewFullImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val imageUrl = intent.getStringExtra("url")
         Glide.with(applicationContext).load(imageUrl).into(binding.viewFullImageImageView)

@@ -38,9 +38,9 @@ import retrofit2.Response
 class ChattingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChattingBinding
+    private lateinit var chatsAdapter: ChatsAdapter
     private var firebaseUser: FirebaseUser? = null
     private var visitId: String? = null
-    private var chatsAdapter: ChatsAdapter? = null
     private var chatsList: List<Chat>? = null
     private var seenListener: ValueEventListener? = null
     private var reference: DatabaseReference? = null
@@ -51,6 +51,10 @@ class ChattingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChattingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.chattingToolbar)
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         visitId = intent.getStringExtra("visit_id")
 
